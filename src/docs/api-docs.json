@@ -1,0 +1,27 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "MintchieByMint - Order management API"
+  },
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "API test running"
+    }
+  ],
+  "schemes": ["http", "https"],
+  "paths": {
+    "/ping": {
+      "get": {
+        "tags": ["API test running"],
+        "summary": "",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "API is running"
+          }
+        }
+      }
+    }
+  }
+}
