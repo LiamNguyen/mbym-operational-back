@@ -8,19 +8,15 @@ import generator from 'generate-password';
 import { hashPassword } from './helpers/passwordHash';
 require('dotenv').config();
 
-mongoose.connect(
-  'mongodb://localhost/yelp_camp',
-  {
-    //process.env.MONGO_URL
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-  },
-  (err) => {
-    console.log('db connected');
-  }
-);
+mongoose.connect('mongodb://localhost/yelp_camp', {
+  //process.env.MONGO_URL
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+}).then(() =>{
+  console.log("connected")
+});
 //
 const Schema = mongoose.Schema;
 const roleSchema = new Schema({
@@ -69,13 +65,11 @@ const userObj = {
   passwordHashed: hashPassword(defaultPassword)
   //Hash here
 };
-console.log(userObj)
+console.log(userObj);
 //  Set email and password to database
-const result = User.create(userObj).then(
-  data =>{
-    console.log("created")
-  }
-);
+const result = User.create(userObj).then(data => {
+  console.log('created');
+});
 // })
 // .catch(err => {
 //   console.log(err);

@@ -8,7 +8,7 @@
     "build": "rimraf ./build && tsc",
     "test": "export NODE_ENV=test && jest --notify --config=jest.config.js",
     "format": "prettier --write \"**/*.ts\"",
-    "setup": "ts-node  ./src/setting-up.ts"
+    "create-admin-account": "ts-node  ./src/createAdminAccountScript.ts"
   },
   "repository": {
     "type": "git",
