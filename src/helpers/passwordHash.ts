@@ -14,3 +14,11 @@ const saltRounds = 3;
 export const hashPassword = (plainPassword: string) => {
   return bcrypt.hashSync(plainPassword, saltRounds);
 };
+export const comparePasswords = (pass: string, dbPass: string) => {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(pass, dbPass, function (err, result) {
+      if (err) reject(err);
+      resolve(result);
+    });
+  });
+};
