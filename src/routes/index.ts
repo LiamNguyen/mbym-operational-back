@@ -3,7 +3,7 @@ import swaggerUI from 'swagger-ui-express';
 
 import apiDocs from '../docs/api-docs.json';
 import Ping from './Ping';
-import NewUser from './new-user-login'
+import NewUser from './reset-password'
 
 export default (app: express.Application) => {
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(apiDocs));
