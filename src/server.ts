@@ -16,6 +16,7 @@ const startServer = async () => {
   await connectDatabase();
   server = app.listen(port);
   console.log(`Project is running at http://localhost:${port}`);
+  console.log("=============================================\n\n")
 };
 
 startServer();

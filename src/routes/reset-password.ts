@@ -1,9 +1,9 @@
 import express from 'express';
-import mongoose from 'mongoose';
 
 import { comparePasswords, hashPassword } from '../helpers/passwordHash';
 import connect from '../database';
 import User from '../models/User';
+import Token from '../models/Token';
 
 const router = express.Router();
 
@@ -11,7 +11,6 @@ const router = express.Router();
 const getUserByEmail = async (email: string) => {
   await connect();
   const response = await User.findOne({ email });
-  console.log(response);
   return response;
 };
 
@@ -28,16 +27,38 @@ const updateDefaultPassword = async (
   console.log('Password Updated');
 };
 
+const getTokenByUserId = async (user_id: string) => {
+  await connect();
+  const response = await Token.findOne({ user_id });
+  return response;
+};
+
 //Routes
 router.route('/reset-password/').post(async (req, res) => {
   const { email, password, newPassword } = req.body;
+
   if (!email) {
     res.json({ message: 'invalid form submission' });
   }
   // Get user with email from DB
   const user = await getUserByEmail(email);
-  console.log(user);
-  // res.status(200).send('Found user');
+  console.log(user._id);
+
+  const tokenFromHeader = req.headers.authorization;
+  const tokenLoadFromUser = await getTokenByUserId(user._id);
+  const tokenFromDB = tokenLoadFromUser.token;
+  const tokenCheck = tokenFromDB === tokenFromHeader;
+
+  if (!tokenCheck) {
+    return res.json({ message: 'Invalid Token for this user' });
+  }
+  //Check time on Token
+
+  const expiredTokenCheck = new Date() > tokenLoadFromUser.expireAt;
+  if (expiredTokenCheck) {
+    return res.json({ message: 'Token expired, please contact admin' });
+  } 
+
   //Hash password and compare with in DB
   const passFromDB = user && user._id ? user.passwordHashed : null;
   if (!passFromDB) {
@@ -59,10 +80,11 @@ router.route('/reset-password/').post(async (req, res) => {
     }
   }
 });
-router.route('/reset-password/').get((req, res) => {
-  res.status(200).send('ALoha');
-  console.log('dfasdf');
-});
+
+// router.route('/reset-password-check/').post((req, res) => {
+//   const token = req.headers.authorization
+//   console.log(token);
+//   res.status(200).send('Aloha');
+
+// });
 export default router;
-//User sign in route
-//0zsjY29oAo
