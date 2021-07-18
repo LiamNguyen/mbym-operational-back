@@ -1,0 +1,13 @@
+## User sign in
+
+POST http://localhost:7001/api/reset-password/
+Content-Type: application/json
+
+{
+    "email": "huy@123.com",
+    "password": "654321",
+    "newPassword": "654321"
+}
+###
+
+GET    http://localhost:7001/api/reset-password-check/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imh1eUAxMjMuY29tIiwiaWF0IjoxNjI0NTQ5NTAwfQ.GoEeFnpCsYGgKFltTMSAKba9_-DbEod0c274umtyZLs
